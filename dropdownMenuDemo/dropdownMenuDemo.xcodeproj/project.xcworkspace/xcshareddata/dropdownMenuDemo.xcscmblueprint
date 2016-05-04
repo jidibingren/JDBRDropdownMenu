@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "8123E2B133B308CD0C9C0B48DC60B11A619DD1FA",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "8123E2B133B308CD0C9C0B48DC60B11A619DD1FA" : 0,
+    "672ACBD9794644390A12EB01D0A20A1B1F1962C4" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "3F96CA96-ADE0-4358-A5D4-0E8388F14F4B",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "8123E2B133B308CD0C9C0B48DC60B11A619DD1FA" : "JDBRDropdownMenu\/",
+    "672ACBD9794644390A12EB01D0A20A1B1F1962C4" : "testDropDownMenu3"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "dropdownMenuDemo",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "dropdownMenuDemo\/dropdownMenuDemo.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/wangxg1989\/dropdownMenu.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "672ACBD9794644390A12EB01D0A20A1B1F1962C4"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/jidibingren\/JDBRDropdownMenu.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "8123E2B133B308CD0C9C0B48DC60B11A619DD1FA"
+    }
+  ]
+}
