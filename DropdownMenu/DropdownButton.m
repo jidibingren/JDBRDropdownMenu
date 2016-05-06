@@ -62,7 +62,7 @@ static NSInteger const buttonTag = 1000;
     }
     
     // bottomSeparatorLine
-    UIView *bottomLine = [[UIView alloc] initWithFrame:CGRectMake(0, self.buttonHeight-1, DDSCREEN_WIDTH, 1)];
+    UIView *bottomLine = [[UIView alloc] initWithFrame:CGRectMake(0, self.buttonHeight-self.separatorLineWidth, DDSCREEN_WIDTH, self.separatorLineWidth)];
     bottomLine.backgroundColor = self.separatorLineColor;
     [self addSubview:bottomLine];
     
