@@ -63,7 +63,9 @@ static NSInteger const buttonTag = 1000;
     
     // bottomSeparatorLine
     UIView *bottomLine = [[UIView alloc] initWithFrame:CGRectMake(0, self.buttonHeight-self.separatorLineWidth, DDSCREEN_WIDTH, self.separatorLineWidth)];
+    
     bottomLine.backgroundColor = self.separatorLineColor;
+    
     [self addSubview:bottomLine];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hideMenu:) name:@"hideMenu" object:_lastTapObj];
