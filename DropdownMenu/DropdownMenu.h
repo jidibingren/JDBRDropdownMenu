@@ -46,6 +46,8 @@ typedef NS_ENUM(NSInteger, DDContentViewType) {
 
 @interface DropdownMenu : UIViewController
 
+@property (nonatomic, strong) NSArray *titles;
+@property (nonatomic, strong) NSArray *menuItems;
 @property (nonatomic, weak) id<DropdownMenuDelegate> delegate;
 
 @property (nonatomic        ) CGRect  originFrame;

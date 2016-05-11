@@ -15,9 +15,6 @@
     
 }
 
-@property (nonatomic, strong) NSArray *titles;
-@property (nonatomic, strong) NSArray *menuItems;
-
 @property (nonatomic, strong) NSMutableArray *btnIndexArray;
 @property (nonatomic, assign) NSInteger btnSelectedIndex;
 
