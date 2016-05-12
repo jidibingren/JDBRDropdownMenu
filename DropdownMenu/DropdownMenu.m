@@ -232,9 +232,10 @@
     NSString *index = [NSString stringWithFormat:@"%@-%@", values[0], values[1]];
     [_btnIndexArray setObject:index atIndexedSubscript:_btnSelectedIndex];
     
+    [self hideDropdownMenu];
+    
     if (_delegate && [_delegate respondsToSelector:@selector(dropdownSelectedLeftIndex:RightIndex:)]) {
         [_delegate performSelector:@selector(dropdownSelectedLeftIndex:RightIndex:) withObject:values[0] withObject:values[1]];
-        [self hideDropdownMenu];
     }
 }
 

@@ -457,7 +457,7 @@ static NSInteger const tableViewMaxHeight   = 352;
 }
 
 - (void)setCellClass2:(Class)cellClass2{
-    _cellClass1 = cellClass2;
+    _cellClass2 = cellClass2;
     [self.secondTableView registerClass:cellClass2 forCellReuseIdentifier:NSStringFromClass(cellClass2)];
 }
 @end
