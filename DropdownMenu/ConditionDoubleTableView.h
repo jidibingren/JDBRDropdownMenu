@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "DropdownMenu.h"
 
-typedef typedef NS_ENUM(NSInteger, CDTableViewType) {
+typedef NS_ENUM(NSInteger, CDTableViewType) {
     CDTableViewTypeDDMenu = 0,
     CDTableViewTypeCustom
 };
@@ -86,7 +86,7 @@ typedef typedef NS_ENUM(NSInteger, CDTableViewType) {
 
 - (void)mappingRightArrayByIndex:(NSInteger)index;
 
-- (NSArray*)mappingItems:(NSArray*)itemsArray dataClass:(Class)class;
+- (NSMutableArray*)mappingItems:(NSArray*)itemsArray dataClass:(Class)class;
 
 @end
 

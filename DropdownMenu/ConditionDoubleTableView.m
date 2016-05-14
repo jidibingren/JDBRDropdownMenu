@@ -149,7 +149,7 @@ static NSInteger const tableViewMaxHeight   = 352;
 #pragma mark - Public Methods
 
 - (void)showContentView:(NSInteger)index withShowItems:(NSArray *)showItems WithSelected:(NSString *)selected {
-    _showItems = showItems;
+    _showItems = [[NSMutableArray alloc]initWithArray:showItems];
     
     if (m_isHidden == YES || m_selectedIndex != index) {
         
@@ -491,7 +491,7 @@ static NSInteger const tableViewMaxHeight   = 352;
     self.view.frame = CGRectMake(0, m_Frame.size.height, m_Frame.size.width, 0);
 }
 
-- (NSArray*)mappingItems:(NSArray*)itemsArray dataClass:(Class)class{
+- (NSMutableArray*)mappingItems:(NSMutableArray*)itemsArray dataClass:(Class)class{
     Class dataClass = class ? class : [CDTableViewCellData class];
     NSMutableArray *dataArray = [[NSMutableArray alloc]initWithCapacity:0];
     for (NSDictionary * item in itemsArray) {
