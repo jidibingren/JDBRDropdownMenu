@@ -61,7 +61,7 @@ static NSInteger const tableViewMaxHeight   = 352;
 }
 @end
 
-@interface ConditionDoubleTableView ()<UITableViewDataSource,UITableViewDelegate> {
+@interface ConditionDoubleTableView ()<UITableViewDataSource,UITableViewDelegate,UIScrollViewDelegate> {
 
     CGRect m_Frame;
     NSInteger m_selectedIndex;
@@ -73,16 +73,12 @@ static NSInteger const tableViewMaxHeight   = 352;
     NSInteger clickIndex;
 }
 
-// 数据
-@property (nonatomic, strong) NSArray *showItems;
-@property (nonatomic, strong) NSArray *leftArray;
-@property (nonatomic, strong) NSArray *rightItems;
-@property (nonatomic, strong) NSArray *rightArray;
-
 // 控件
 @property (nonatomic, strong) UIView *handleView;
-@property (nonatomic, strong) UITableView *firstTableView;
-@property (nonatomic, strong) UITableView *secondTableView;
+//@property (nonatomic, strong) UITableView *firstTableView;
+//@property (nonatomic, strong) UITableView *secondTableView;
+
+@property (nonatomic, strong) NSIndexPath *leftSelectedIndexPath;
 
 @end
 
@@ -100,6 +96,8 @@ static NSInteger const tableViewMaxHeight   = 352;
         
         firstSelectedIndex = 0;
         secondSelectedIndex = 0;
+        _conditionDoubleTableViewType = CDTableViewTypeDDMenu;
+        _leftSelectedIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
     }
     return self;
 }
@@ -107,14 +105,27 @@ static NSInteger const tableViewMaxHeight   = 352;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.view.frame = CGRectMake(0, m_Frame.size.height, m_Frame.size.width, totalHeight);
+    if (_conditionDoubleTableViewType == CDTableViewTypeDDMenu){
+        
+        self.view.frame = CGRectMake(0, m_Frame.size.height, m_Frame.size.width, totalHeight);
+        
+    }else if (_conditionDoubleTableViewType == CDTableViewTypeCustom){
+        
+        self.view.frame = m_Frame;
+        
+    }
     self.view.clipsToBounds = YES;
     
     [self.view addSubview:self.firstTableView];
     [self.view addSubview:self.secondTableView];
-    [self.view addSubview:self.handleView];
     
-    [self showAndHideList:YES];
+    if (_conditionDoubleTableViewType == CDTableViewTypeDDMenu) {
+        
+        [self.view addSubview:self.handleView];
+        
+        [self showAndHideList:YES];
+        
+    }
 }
 
 - (void)showAndHideList:(BOOL)status {
@@ -168,6 +179,71 @@ static NSInteger const tableViewMaxHeight   = 352;
 }];
 }
 
+#pragma mark - UIScrollViewDelegate
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    
+    if  ([scrollView isEqual:_firstTableView]){
+        
+        if ([self.delegate respondsToSelector:@selector(leftTableView:didScrollToOffset:)]) {
+            
+            [self.delegate leftTableView:_firstTableView didScrollToOffset:scrollView.contentOffset.y];
+            
+        }
+        
+    }else if ([scrollView isEqual:_secondTableView]){
+        
+        if ([self.delegate respondsToSelector:@selector(rightTableView:didScrollToOffset:)]) {
+            
+            [self.delegate rightTableView:_secondTableView didScrollToOffset:scrollView.contentOffset.y];
+            
+        }
+        
+    }
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
+    
+    if  ([scrollView isEqual:_firstTableView]){
+        
+        if ([self.delegate respondsToSelector:@selector(leftTableViewDidEndDragging:willDecelerate:)]) {
+            
+            [self.delegate leftTableViewDidEndDragging:_firstTableView willDecelerate:decelerate];
+            
+        }
+        
+    }else if ([scrollView isEqual:_secondTableView]){
+        
+        if ([self.delegate respondsToSelector:@selector(rightTableViewDidEndDragging:willDecelerate:)]) {
+            
+            [self.delegate rightTableViewDidEndDragging:_secondTableView willDecelerate:decelerate];
+            
+        }
+        
+    }
+}
+
+- (void)scrollViewDidScrollToTop:(UIScrollView *)scrollView{
+    
+    if  ([scrollView isEqual:_firstTableView]){
+        
+        if ([self.delegate respondsToSelector:@selector(leftTableViewDidScrollToTop:)]) {
+            
+            [self.delegate leftTableViewDidScrollToTop:_firstTableView];
+            
+        }
+        
+    }else if ([scrollView isEqual:_secondTableView]){
+        
+        if ([self.delegate respondsToSelector:@selector(rightTableViewDidScrollToTop:)]) {
+            
+            [self.delegate rightTableViewDidScrollToTop:_secondTableView];
+            
+        }
+        
+    }
+}
+
 
 #pragma mark - UITableViewDelegate
 
@@ -200,21 +276,29 @@ static NSInteger const tableViewMaxHeight   = 352;
         cell = [tableView dequeueReusableCellWithIdentifier:identify];
         if (_leftArray.count > indexPath.row) {
             CDTableViewCellData *data = _leftArray[indexPath.row];
-            if (firstSelectedIndex == indexPath.row) {
-                data.isSelected = YES;
-                [_firstTableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionMiddle];
-                if (_rightItems != nil && _rightItems.count > indexPath.row) {
-                    _rightArray = [self mappingItems:_rightItems[indexPath.row] dataClass:_cellDataClass2];
-                    clickIndex = indexPath.row;
-                    [_secondTableView reloadData];
+            if (_conditionDoubleTableViewType == CDTableViewTypeDDMenu) {
+                
+                if (firstSelectedIndex == indexPath.row) {
+                    data.isSelected = YES;
+                    [_firstTableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionMiddle];
+                    if (_rightItems != nil && _rightItems.count > indexPath.row) {
+                        _rightArray = [self mappingItems:_rightItems[indexPath.row] dataClass:_cellDataClass2];
+                        clickIndex = indexPath.row;
+                        [_secondTableView reloadData];
+                    }
+                } else {
+                    data.isSelected = NO;
                 }
-            } else {
-                data.isSelected = NO;
+                
+                data.cellBackgroundColor = _cell1BackgroundColor;
+                data.cellSelectedColor   = _cell1SelectedColor;
+                data.cellTextColor       = _cell1TextColor;
+                data.cellTextFont        = _cell1TextFont;
+            }else if (_conditionDoubleTableViewType == CDTableViewTypeCustom){
+
+                
             }
-            data.cellBackgroundColor = _cell1BackgroundColor;
-            data.cellSelectedColor   = _cell1SelectedColor;
-            data.cellTextColor       = _cell1TextColor;
-            data.cellTextFont        = _cell1TextFont;
+            
             [(CDTableViewCell *)cell setData:data];
         }
         
@@ -224,16 +308,21 @@ static NSInteger const tableViewMaxHeight   = 352;
         cell = [tableView dequeueReusableCellWithIdentifier:identify];
         if (_rightArray.count > indexPath.row) {
             CDTableViewCellData *data = _rightArray[indexPath.row];
-            if (secondSelectedIndex == indexPath.row && firstSelectedIndex == clickIndex) {
-                data.isSelected = YES;
-            } else {
-                data.isSelected = NO;
+            
+            if (_conditionDoubleTableViewType == CDTableViewTypeDDMenu) {
+                
+                if (secondSelectedIndex == indexPath.row && firstSelectedIndex == clickIndex) {
+                    data.isSelected = YES;
+                } else {
+                    data.isSelected = NO;
+                }
+                
+                data.cellBackgroundColor = _cell2BackgroundColor;
+                data.cellSelectedColor   = _cell2SelectedColor;
+                data.cellTextColor       = _cell2TextColor;
+                data.cellTextFont        = _cell2TextFont;
             }
             
-            data.cellBackgroundColor = _cell2BackgroundColor;
-            data.cellSelectedColor   = _cell2SelectedColor;
-            data.cellTextColor       = _cell2TextColor;
-            data.cellTextFont        = _cell2TextFont;
             
             [(CDTableViewCell *)cell setData:data];
         }
@@ -242,25 +331,63 @@ static NSInteger const tableViewMaxHeight   = 352;
     return cell;
 }
 
+- (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    if ([tableView isEqual:_firstTableView]) {
+        
+        if (self.delegate && [self.delegate respondsToSelector:@selector(deselectedLeftViewAtIndexPath:)]) {
+            [self.delegate deselectedLeftViewAtIndexPath:indexPath];
+        }
+        
+    }else if ([tableView isEqual:_secondTableView]){
+        
+        if (self.delegate && [self.delegate respondsToSelector:@selector(deselectedRightViewAtIndexPath:leftViewIndexPath:)]) {
+            [self.delegate deselectedRightViewAtIndexPath:indexPath leftViewIndexPath:_leftSelectedIndexPath];
+        }
+        
+    }
+    
+}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     if ([tableView isEqual:_firstTableView]) {
 
-        if (_rightItems != nil && _rightItems.count > 0) {
-            _rightArray = [self mappingItems:_rightItems[indexPath.row] dataClass:_cellDataClass2];
-            clickIndex = indexPath.row;
-            [_secondTableView reloadData];
-        } else {
-            firstSelectedIndex = 0;
-            [self p_returnSelectedValue:indexPath.row];
-            [_firstTableView reloadData];
+        if (_conditionDoubleTableViewType == CDTableViewTypeDDMenu) {
+            
+            if (_rightItems != nil && _rightItems.count > 0) {
+                _rightArray = [self mappingItems:_rightItems[indexPath.row] dataClass:_cellDataClass2];
+                clickIndex = indexPath.row;
+                [_secondTableView reloadData];
+            } else {
+                firstSelectedIndex = 0;
+                [self p_returnSelectedValue:indexPath.row];
+                [_firstTableView reloadData];
+            }
+        }else if (_conditionDoubleTableViewType == CDTableViewTypeCustom){
+            
+            _leftSelectedIndexPath = indexPath;
+            
+            if (self.delegate && [self.delegate respondsToSelector:@selector(selectedLeftViewAtIndexPath:)]) {
+                [self.delegate selectedLeftViewAtIndexPath:indexPath];
+            }
+            
         }
         
     } else if ([tableView isEqual:_secondTableView]) {
-        firstSelectedIndex = clickIndex;
-        secondSelectedIndex = indexPath.row;
-        [self p_returnSelectedValue:indexPath.row];
-        [_secondTableView reloadData];
+        
+        if (_conditionDoubleTableViewType == CDTableViewTypeDDMenu) {
+            firstSelectedIndex = clickIndex;
+            secondSelectedIndex = indexPath.row;
+            [self p_returnSelectedValue:indexPath.row];
+            [_secondTableView reloadData];
+        }else if (_conditionDoubleTableViewType == CDTableViewTypeCustom){
+            
+            if (self.delegate && [self.delegate respondsToSelector:@selector(selectedRightViewAtIndexPath:leftViewIndexPath:)]) {
+                [self.delegate selectedRightViewAtIndexPath:indexPath leftViewIndexPath:_leftSelectedIndexPath];
+            }
+            
+        }
     }
 }
 
@@ -373,6 +500,20 @@ static NSInteger const tableViewMaxHeight   = 352;
     return dataArray;
 }
 
+- (void)mappingRightArrayByIndex:(NSInteger)index{
+    
+    if (_rightItems != nil && _rightItems.count > index) {
+        
+        _rightArray = [self mappingItems:_rightItems[index] dataClass:_cellDataClass2];
+        
+    }else {
+        
+        _rightArray = [NSMutableArray new];
+        
+    }
+    
+}
+
 //返回选中位置
 - (void)p_returnSelectedValue:(NSInteger)index {
     
@@ -413,6 +554,14 @@ static NSInteger const tableViewMaxHeight   = 352;
         _firstTableView.delegate = self;
         _firstTableView.tableFooterView = [[UIView alloc] init];
         [_firstTableView registerClass:[CDTableViewCell1 class] forCellReuseIdentifier:leftTableViewCellID];
+        
+        if (_conditionDoubleTableViewType == CDTableViewTypeCustom){
+            
+            _firstTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+            
+            _firstTableView.frame = CGRectMake(0, 0, m_Frame.size.width*(_widthRatio > 0 ? _widthRatio : 0.5), m_Frame.size.height);
+            
+        }
     }
     return _firstTableView;
 }
@@ -426,6 +575,14 @@ static NSInteger const tableViewMaxHeight   = 352;
         _secondTableView.delegate = self;
         _secondTableView.tableFooterView = [[UIView alloc] init];
         [_secondTableView registerClass:[CDTableViewCell2 class] forCellReuseIdentifier:rightTableViewCellID];
+        
+        if (_conditionDoubleTableViewType == CDTableViewTypeCustom){
+            
+            _secondTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+            
+            _secondTableView.frame = CGRectMake(m_Frame.size.width*(_widthRatio > 0 ? _widthRatio : 0.5), 0, m_Frame.size.width*(1-(_widthRatio > 0 ? _widthRatio : 0.5)), m_Frame.size.height);
+            
+        }
     }
     return _secondTableView;
 }
@@ -464,6 +621,18 @@ static NSInteger const tableViewMaxHeight   = 352;
 
 #pragma mark - CDTableViewCell implementation
 @implementation CDTableViewCell
+
+- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
+    if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
+        [self setupSubviewsWithFrame:self.frame];
+    }
+    return self;
+}
+
+- (void)setupSubviewsWithFrame:(CGRect)frame{
+    
+}
+
 @end
 
 #pragma mark - CDTableViewCellData implementation

@@ -171,4 +171,10 @@ static NSInteger const buttonTag = 1000;
     return _selectedImage ? _selectedImage : @"ddxiala2";
 }
 
+- (void)dealloc{
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    
+}
+
 @end

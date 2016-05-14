@@ -9,16 +9,42 @@
 #import <UIKit/UIKit.h>
 #import "DropdownMenu.h"
 
-@protocol ConditionDoubleTableViewDelegate <NSObject>
+typedef typedef NS_ENUM(NSInteger, CDTableViewType) {
+    CDTableViewTypeDDMenu = 0,
+    CDTableViewTypeCustom
+};
 
+@protocol ConditionDoubleTableViewDelegate <NSObject>
 @required
 - (void)selectedFirstValues:(NSArray *)values withTitle:(NSString *)title;
+@optional
+- (void)selectedLeftViewAtIndexPath:(NSIndexPath *)indexPath;
+- (void)deselectedLeftViewAtIndexPath:(NSIndexPath *)indexPath;
+- (void)selectedRightViewAtIndexPath:(NSIndexPath *)indexPathRight leftViewIndexPath:(NSIndexPath *)indexPathLeft;
+- (void)deselectedRightViewAtIndexPath:(NSIndexPath *)indexPathRight leftViewIndexPath:(NSIndexPath *)indexPathLeft;
+- (void)leftTableView:(UITableView *)tableView didScrollToOffset:(CGFloat)offset;
+- (void)rightTableView:(UITableView *)tableView didScrollToOffset:(CGFloat)offset;
+- (void)leftTableViewDidEndDragging:(UITableView *)tableView willDecelerate:(BOOL)decelerate;
+- (void)rightTableViewDidEndDragging:(UITableView *)tableView willDecelerate:(BOOL)decelerate;
+- (void)leftTableViewDidScrollToTop:(UITableView *)tableView;
+- (void)rightTableViewDidScrollToTop:(UITableView *)tableView;
 @end
 
 
 @interface ConditionDoubleTableView : UIViewController<DDShowContentDelegate>
 
+@property (nonatomic, ) CDTableViewType conditionDoubleTableViewType;
+
+@property (nonatomic, strong) UITableView *firstTableView;
+@property (nonatomic, strong) UITableView *secondTableView;
+
 @property (nonatomic, weak) id<ConditionDoubleTableViewDelegate> delegate;
+
+// 数据
+@property (nonatomic, strong) NSMutableArray *showItems;
+@property (nonatomic, strong) NSMutableArray *leftArray;
+@property (nonatomic, strong) NSMutableArray *rightItems;
+@property (nonatomic, strong) NSMutableArray *rightArray;
 
 // 否则，提供一个SCTableViewCell的子类
 @property(nonatomic, strong) Class cellClass1;
@@ -33,6 +59,10 @@
 @property(nonatomic, strong) Class cellDataClass2;
 
 @property(nonatomic) CGFloat cellHeight2;
+
+@property(nonatomic) CGFloat firstFooterHeight;
+
+@property(nonatomic) CGFloat secondFooterHeight;
 
 @property(nonatomic, strong) UIColor* cell1BackgroundColor;
 @property(nonatomic, strong) UIColor* cell2BackgroundColor;
@@ -53,6 +83,10 @@
 @property(nonatomic)BOOL    isReachBottom;
 
 - (instancetype)initWithFrame:(CGRect)frame;
+
+- (void)mappingRightArrayByIndex:(NSInteger)index;
+
+- (NSArray*)mappingItems:(NSArray*)itemsArray dataClass:(Class)class;
 
 @end
 
