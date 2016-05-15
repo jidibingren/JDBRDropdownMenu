@@ -275,13 +275,13 @@ static NSInteger const tableViewMaxHeight   = 352;
 // loadData, newer: 请求更加新的数据
 - (void)loadData:(BOOL)newer
 {
-    NSString* lastId = @"";
+    
     if (!newer && _dataArray.count > 0) {
-        lastId = ((DDCollectionViewCellData*)_dataArray.lastObject).id;
+        
     }
     if (!_requestParams)
         _requestParams = [[NSMutableDictionary alloc]initWithCapacity:1];
-    _requestParams[_lastIdKey ?: @"lastId"] = lastId;
+    
     [self customizeParams: _requestParams newer:newer];
 }
 

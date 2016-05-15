@@ -117,7 +117,6 @@ typedef NS_ENUM(NSInteger, DDCollectionViewStyle) {
 
 @interface DDCollectionViewCellData : NSObject
 
-@property(nonatomic, strong, readonly) NSString *id;
 @property(nonatomic, strong)NSString *title;
 
 - (void) updateWithDictionary: (NSDictionary*)dic;

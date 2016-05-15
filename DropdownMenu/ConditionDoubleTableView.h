@@ -95,7 +95,6 @@ typedef NS_ENUM(NSInteger, CDTableViewType) {
 @interface CDTableViewCellData: NSObject
 // 每个子类必须的字段，如果没有，请override如下方法
 // - (NSString*) id;
-@property(nonatomic, strong, readonly) NSString* id;
 @property(nonatomic, strong) NSString* title;
 @property(nonatomic        ) BOOL      isSelected;
 @property(nonatomic, strong) UIColor*  cellBackgroundColor;
