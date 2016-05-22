@@ -66,11 +66,11 @@
     [super layoutSubviews];
     
     
-    CGSize titleSize = [self.titleLabel.text sizeWithAttributes:@{NSFontAttributeName:DDTEXTFONT(13)}];
+    CGSize titleSize = [self.titleLabel.text sizeWithAttributes:@{NSFontAttributeName:self.titleLabel.font}];
     CGSize imageSize = self.imageView.image.size;
     
     // title最大宽度
-    CGFloat titleMaxWidth = self.frame.size.width - imageSize.width - 25;
+    CGFloat titleMaxWidth = self.frame.size.width - imageSize.width - 4;
     CGFloat titleWidth = titleSize.width;
     if (titleSize.width > titleMaxWidth) {
         titleWidth = titleMaxWidth;

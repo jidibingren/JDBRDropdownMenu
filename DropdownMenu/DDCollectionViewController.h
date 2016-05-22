@@ -47,6 +47,8 @@ typedef NS_ENUM(NSInteger, DDCollectionViewStyle) {
 
 @property(nonatomic)BOOL    isReachBottom;
 
+@property(nonatomic)BOOL    hiddenHandleView;
+
 @property(nonatomic)DDCollectionViewStyle collectionViewStyle;
 
 /* DDCollectionViewStylePlain 和 DDCollectionViewStyleNetwork 格式必须

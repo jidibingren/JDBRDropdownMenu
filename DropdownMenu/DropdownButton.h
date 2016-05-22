@@ -27,9 +27,12 @@
 @property (nonatomic, strong) UIColor  *separatorLineColor;
 @property (nonatomic,       ) CGFloat  separatorLineHeight;
 @property (nonatomic,       ) CGFloat  separatorLineWidth;
-@property (nonatomic, strong) UIColor  *bottomLineColor;
 @property (nonatomic, strong) UIFont   *titleFont;
 @property (nonatomic,       ) CGFloat  buttonHeight;
+@property (nonatomic,       ) CGFloat  topLineHeight;
+@property (nonatomic,       ) CGFloat  bottomLineHeight;
+@property (nonatomic, strong) UIColor  *topLineColor;
+@property (nonatomic, strong) UIColor  *bottomLineColor;
 
 - (instancetype)initWithFrame:(CGRect)frame;
 

@@ -82,6 +82,8 @@ typedef NS_ENUM(NSInteger, CDTableViewType) {
 
 @property(nonatomic)BOOL    isReachBottom;
 
+@property(nonatomic)BOOL    hiddenHandleView;
+
 - (instancetype)initWithFrame:(CGRect)frame;
 
 - (void)mappingRightArrayByIndex:(NSInteger)index;

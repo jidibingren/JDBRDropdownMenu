@@ -65,9 +65,12 @@ typedef NS_ENUM(NSInteger, DDContentViewType) {
 @property (nonatomic, strong) UIColor  *separatorLineColor;
 @property (nonatomic,       ) CGFloat  separatorLineHeight;
 @property (nonatomic,       ) CGFloat  separatorLineWidth;
-@property (nonatomic, strong) UIColor  *bottomLineColor;
 @property (nonatomic, strong) UIFont   *titleFont;
 @property (nonatomic,       ) CGFloat  buttonHeight;
+@property (nonatomic,       ) CGFloat  topLineHeight;
+@property (nonatomic,       ) CGFloat  bottomLineHeight;
+@property (nonatomic, strong) UIColor  *topLineColor;
+@property (nonatomic, strong) UIColor  *bottomLineColor;
 
 @property (nonatomic, strong) NSArray *contentTypesArray;
 
@@ -93,6 +96,8 @@ typedef NS_ENUM(NSInteger, DDContentViewType) {
 @property (nonatomic, strong) NSArray* cellHeight2Array;
 
 @property (nonatomic, strong) NSArray *widthRatioArray;
+
+@property (nonatomic, assign) BOOL hiddenCDHandleView;
 
 @property (nonatomic, strong) NSArray *collectionCellClassArray;
 @property (nonatomic, strong) NSArray *collectionCellDataClassArray;

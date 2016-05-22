@@ -43,7 +43,7 @@ static NSInteger const buttonTag = 1000;
     for (int index = 0; index <buttonCount; ++index) {
         CGFloat itemWidth = CGRectGetWidth(self.frame)/buttonCount;
         CGRect itemFrame = CGRectMake(index *itemWidth, 0, itemWidth, CGRectGetHeight(self.frame));
-        UIImage *image = [UIImage imageNamed:@"ddxiala"];
+        UIImage *image = [UIImage imageNamed:_normalImage ? _normalImage : @"ddxiala"];
         DropdownItem *button = [[DropdownItem alloc] initWithFrame:itemFrame andTitle:titles[index] andImage:image];
         button.titleLabel.font = self.titleFont;
         button.titleLabel.textColor = self.normalTitleColor;
@@ -60,11 +60,21 @@ static NSInteger const buttonTag = 1000;
         separatorLine.backgroundColor = self.separatorLineColor;
         [self addSubview:separatorLine];
     }
+    // topSeparatorLine
+    CGFloat topLineHeight = self.topLineHeight > 0 ? self.topLineHeight : self.separatorLineWidth;
+    UIColor *topLineColor = self.topLineColor ? self.topLineColor : self.separatorLineColor;
+    UIView *topLine = [[UIView alloc] initWithFrame:CGRectMake(0, 0, DDSCREEN_WIDTH, topLineHeight)];
+    
+    topLine.backgroundColor = topLineColor;
+    
+    [self addSubview:topLine];
     
     // bottomSeparatorLine
-    UIView *bottomLine = [[UIView alloc] initWithFrame:CGRectMake(0, self.buttonHeight-self.separatorLineWidth, DDSCREEN_WIDTH, self.separatorLineWidth)];
+    CGFloat bottomLineHeight = self.bottomLineHeight > 0 ? self.bottomLineHeight : self.separatorLineWidth;
+    UIColor *bottomLineColor = self.bottomLineColor ? self.bottomLineColor : self.separatorLineColor;
+    UIView *bottomLine = [[UIView alloc] initWithFrame:CGRectMake(0, self.buttonHeight-bottomLineHeight, DDSCREEN_WIDTH, bottomLineHeight)];
     
-    bottomLine.backgroundColor = self.separatorLineColor;
+    bottomLine.backgroundColor = bottomLineColor;
     
     [self addSubview:bottomLine];
     

@@ -121,7 +121,9 @@ static NSInteger const tableViewMaxHeight   = 352;
     
     if (_conditionDoubleTableViewType == CDTableViewTypeDDMenu) {
         
-        [self.view addSubview:self.handleView];
+        if (!_hiddenHandleView) {
+            [self.view addSubview:self.handleView];
+        }
         
         [self showAndHideList:YES];
         
@@ -392,18 +394,18 @@ static NSInteger const tableViewMaxHeight   = 352;
 }
 
 // cell的分割线左侧补齐
-
 -(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
     if ([cell respondsToSelector:@selector(setSeparatorInset:)]) {
-        [cell setSeparatorInset:UIEdgeInsetsZero];
+        [cell setSeparatorInset:UIEdgeInsetsMake(0, 40, 0, 0)];
     }
     if ([cell respondsToSelector:@selector(setPreservesSuperviewLayoutMargins:)]) {
         [cell setPreservesSuperviewLayoutMargins:NO];
     }
     if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
-        [cell setLayoutMargins:UIEdgeInsetsZero];
+        [cell setLayoutMargins:UIEdgeInsetsMake(0, 40, 0, 0)];
     }
 }
+
 
 
 #pragma mark - private Methods
@@ -423,16 +425,18 @@ static NSInteger const tableViewMaxHeight   = 352;
     }
     _secondTableView.frame = CGRectMake(0, 0, m_Frame.size.width, totalHeight);
     
-    // 把手
-    _handleView.frame = CGRectMake(0, totalHeight, m_Frame.size.width, handleHeight);
-    UIImageView *handleImage = (UIImageView *)[_handleView viewWithTag:tag_HandleImage];
-    handleImage.frame = CGRectMake(_handleView.frame.size.width/2-8, 5, 16, 8);
-
-    UIView *handleBottomLine = [_handleView viewWithTag:tag_HandlebottomLine];
-    handleBottomLine.frame = CGRectMake(0, CGRectGetHeight(_handleView.frame)-1, DDSCREEN_WIDTH, 1);
-    
-    // 背景视图
-    totalHeight += handleHeight;
+    if (!_hiddenHandleView) {
+        // 把手
+        _handleView.frame = CGRectMake(0, totalHeight, m_Frame.size.width, handleHeight);
+        UIImageView *handleImage = (UIImageView *)[_handleView viewWithTag:tag_HandleImage];
+        handleImage.frame = CGRectMake(_handleView.frame.size.width/2-8, 5, 16, 8);
+        
+        UIView *handleBottomLine = [_handleView viewWithTag:tag_HandlebottomLine];
+        handleBottomLine.frame = CGRectMake(0, CGRectGetHeight(_handleView.frame)-1, DDSCREEN_WIDTH, 1);
+        
+        // 背景视图
+        totalHeight += handleHeight;
+    }
 }
 
 - (void)p_layoutRight:(NSInteger)cellRowCount {
@@ -451,16 +455,18 @@ static NSInteger const tableViewMaxHeight   = 352;
     _firstTableView.frame = CGRectMake(0, 0, m_Frame.size.width*(_widthRatio > 0 ? _widthRatio : 0.5), totalHeight);
     _secondTableView.frame = CGRectMake(m_Frame.size.width*(_widthRatio > 0 ? _widthRatio : 0.5), 0, m_Frame.size.width*(1-(_widthRatio > 0 ? _widthRatio : 0.5)), totalHeight);
     
-    // 把手
-    _handleView.frame = CGRectMake(0, totalHeight, m_Frame.size.width, handleHeight);
-    UIImageView *handleImage = (UIImageView *)[_handleView viewWithTag:tag_HandleImage];
-    handleImage.frame = CGRectMake(_handleView.frame.size.width/2-8, 5, 16, 8);
-    
-    UIView *handleBottomLine = [_handleView viewWithTag:tag_HandlebottomLine];
-    handleBottomLine.frame = CGRectMake(0, CGRectGetHeight(_handleView.frame)-1, DDSCREEN_WIDTH, 1);
-    
-    // 背景视图
-    totalHeight += handleHeight;
+    if (!_hiddenHandleView) {
+        // 把手
+        _handleView.frame = CGRectMake(0, totalHeight, m_Frame.size.width, handleHeight);
+        UIImageView *handleImage = (UIImageView *)[_handleView viewWithTag:tag_HandleImage];
+        handleImage.frame = CGRectMake(_handleView.frame.size.width/2-8, 5, 16, 8);
+        
+        UIView *handleBottomLine = [_handleView viewWithTag:tag_HandlebottomLine];
+        handleBottomLine.frame = CGRectMake(0, CGRectGetHeight(_handleView.frame)-1, DDSCREEN_WIDTH, 1);
+        
+        // 背景视图
+        totalHeight += handleHeight;
+    }
 }
 
 - (void)p_showList {

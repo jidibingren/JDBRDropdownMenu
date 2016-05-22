@@ -92,7 +92,12 @@ static NSInteger const tableViewMaxHeight   = 352;
     self.view.clipsToBounds = YES;
     
     [self.view addSubview:self.collectionView];
-    [self.view addSubview:self.handleView];
+    
+    if (!_hiddenHandleView) {
+        
+        [self.view addSubview:self.handleView];
+        
+    }
     
     [self showAndHideList:YES];
 }
@@ -124,16 +129,20 @@ static NSInteger const tableViewMaxHeight   = 352;
     }
     _collectionView.frame = CGRectMake(0, 0, m_Frame.size.width, totalHeight);
     
-    // 把手
-    _handleView.frame = CGRectMake(0, totalHeight, m_Frame.size.width, handleHeight);
-    UIImageView *handleImage = (UIImageView *)[_handleView viewWithTag:tag_HandleImage];
-    handleImage.frame = CGRectMake(_handleView.frame.size.width/2-8, 5, 16, 8);
-    
-    UIView *handleBottomLine = [_handleView viewWithTag:tag_HandlebottomLine];
-    handleBottomLine.frame = CGRectMake(0, CGRectGetHeight(_handleView.frame)-1, DDSCREEN_WIDTH, 1);
-    
-    // 背景视图
-    totalHeight += handleHeight;
+    if (!_hiddenHandleView) {
+        
+        // 把手
+        _handleView.frame = CGRectMake(0, totalHeight, m_Frame.size.width, handleHeight);
+        UIImageView *handleImage = (UIImageView *)[_handleView viewWithTag:tag_HandleImage];
+        handleImage.frame = CGRectMake(_handleView.frame.size.width/2-8, 5, 16, 8);
+        
+        UIView *handleBottomLine = [_handleView viewWithTag:tag_HandlebottomLine];
+        handleBottomLine.frame = CGRectMake(0, CGRectGetHeight(_handleView.frame)-1, DDSCREEN_WIDTH, 1);
+        
+        // 背景视图
+        totalHeight += handleHeight;
+
+    }
 }
 
 - (void)p_layoutRight:(NSInteger)cellRowCount {
@@ -151,16 +160,18 @@ static NSInteger const tableViewMaxHeight   = 352;
     }
     _collectionView.frame = CGRectMake(0, 0, m_Frame.size.width, totalHeight);
     
-    // 把手
-    _handleView.frame = CGRectMake(0, totalHeight, m_Frame.size.width, handleHeight);
-    UIImageView *handleImage = (UIImageView *)[_handleView viewWithTag:tag_HandleImage];
-    handleImage.frame = CGRectMake(_handleView.frame.size.width/2-8, 5, 16, 8);
-    
-    UIView *handleBottomLine = [_handleView viewWithTag:tag_HandlebottomLine];
-    handleBottomLine.frame = CGRectMake(0, CGRectGetHeight(_handleView.frame)-1, DDSCREEN_WIDTH, 1);
-    
-    // 背景视图
-    totalHeight += handleHeight;
+    if (!_hiddenHandleView) {
+        // 把手
+        _handleView.frame = CGRectMake(0, totalHeight, m_Frame.size.width, handleHeight);
+        UIImageView *handleImage = (UIImageView *)[_handleView viewWithTag:tag_HandleImage];
+        handleImage.frame = CGRectMake(_handleView.frame.size.width/2-8, 5, 16, 8);
+        
+        UIView *handleBottomLine = [_handleView viewWithTag:tag_HandlebottomLine];
+        handleBottomLine.frame = CGRectMake(0, CGRectGetHeight(_handleView.frame)-1, DDSCREEN_WIDTH, 1);
+        
+        // 背景视图
+        totalHeight += handleHeight;
+    }
 }
 
 - (void)p_showList {

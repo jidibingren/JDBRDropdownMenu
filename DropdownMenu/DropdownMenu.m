@@ -268,9 +268,12 @@
         _dropdownButton.separatorLineColor = self.separatorLineColor;
         _dropdownButton.separatorLineHeight = self.separatorLineHeight;
         _dropdownButton.separatorLineWidth = self.separatorLineWidth;
-        _dropdownButton.bottomLineColor = self.bottomLineColor;
         _dropdownButton.titleFont = self.titleFont;
         _dropdownButton.buttonHeight = self.buttonHeight;
+        _dropdownButton.topLineHeight = self.topLineHeight;
+        _dropdownButton.topLineColor  = self.topLineColor;
+        _dropdownButton.bottomLineHeight = self.bottomLineHeight;
+        _dropdownButton.bottomLineColor  = self.bottomLineColor;
         
         [_dropdownButton setupWithTitles:_titles];
         _dropdownButton.delegate = self;
@@ -283,6 +286,7 @@
     if (!_showList) {
         _showList = [[ConditionDoubleTableView alloc] initWithFrame:self.originFrame];
         _showList.delegate = self;
+        _showList.hiddenHandleView = self.hiddenCDHandleView;
     }
     return _showList;
 }
@@ -299,6 +303,7 @@
         _collectionShowList.collectionViewStyle = DDCollectionViewStylePlain;
         _collectionShowList.delegate = self;
         _collectionShowList.view.backgroundColor = [UIColor whiteColor];
+        _collectionShowList.hiddenHandleView = self.hiddenCDHandleView;
     }
     
     return _collectionShowList;
