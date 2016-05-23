@@ -99,6 +99,8 @@ typedef NS_ENUM(NSInteger, DDContentViewType) {
 
 @property (nonatomic, assign) BOOL hiddenCDHandleView;
 
+@property(nonatomic)UIEdgeInsets tableViewSeparatorEdgeInsets;
+
 @property (nonatomic, strong) NSArray *collectionCellClassArray;
 @property (nonatomic, strong) NSArray *collectionCellDataClassArray;
 @property (nonatomic, strong) NSArray<UICollectionViewFlowLayout*> *layoutArray;

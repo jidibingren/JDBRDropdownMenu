@@ -84,6 +84,8 @@ typedef NS_ENUM(NSInteger, CDTableViewType) {
 
 @property(nonatomic)BOOL    hiddenHandleView;
 
+@property(nonatomic)UIEdgeInsets separatorEdgeInsets;
+
 - (instancetype)initWithFrame:(CGRect)frame;
 
 - (void)mappingRightArrayByIndex:(NSInteger)index;

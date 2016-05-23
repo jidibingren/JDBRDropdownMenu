@@ -287,6 +287,7 @@
         _showList = [[ConditionDoubleTableView alloc] initWithFrame:self.originFrame];
         _showList.delegate = self;
         _showList.hiddenHandleView = self.hiddenCDHandleView;
+        _showList.separatorEdgeInsets = self.tableViewSeparatorEdgeInsets;
     }
     return _showList;
 }
