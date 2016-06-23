@@ -15,4 +15,6 @@
 
 - (instancetype)initWithFrame:(CGRect)frame andTitle:(NSString *)title andImage:(UIImage *)image;
 
+- (void)resetTitleLabelFrame;
+
 @end

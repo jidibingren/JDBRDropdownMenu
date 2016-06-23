@@ -96,6 +96,38 @@
 
 }
 
+- (void)resetTitleLabelFrame {
+    
+    CGSize titleSize = [self.titleLabel.text sizeWithAttributes:@{NSFontAttributeName:self.titleLabel.font}];
+    CGSize imageSize = self.imageView.image.size;
+    
+    // title最大宽度
+    CGFloat titleMaxWidth = self.frame.size.width - imageSize.width - 4;
+    CGFloat titleWidth = titleSize.width;
+    if (titleSize.width > titleMaxWidth) {
+        titleWidth = titleMaxWidth;
+    }
+    
+    CGFloat sizeHeight = 0, sizeWidth = 0;
+    // 控件总高
+    if (titleSize.height > imageSize.height) {
+        sizeHeight = titleSize.height;
+    } else {
+        sizeHeight = imageSize.height;
+    }
+    //控件总宽
+    sizeWidth = titleWidth + imageSize.width;
+    _size = CGSizeMake(sizeWidth, sizeHeight);
+    CGFloat offsetX = (self.frame.size.width - sizeWidth) / 2;
+    CGFloat offsetY = (self.frame.size.height - sizeHeight) / 2;
+    
+    // 计算位置
+    _titleLabel.frame = CGRectMake(offsetX, offsetY, titleWidth, titleSize.height);
+    _imageView.frame = CGRectMake(offsetX + titleWidth + 5,offsetY+(sizeHeight-imageSize.height)/2,
+                                  imageSize.width, imageSize.height);
+    
+}
+
 - (UILabel *)titleLabel {
     
     if (!_titleLabel) {

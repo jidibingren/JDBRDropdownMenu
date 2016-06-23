@@ -85,6 +85,7 @@ static NSInteger const buttonTag = 1000;
     
     DropdownItem *item = (DropdownItem *)[self viewWithTag:index + buttonTag];
     item.titleLabel.text = title;
+    [item resetTitleLabelFrame];
 }
 
 
